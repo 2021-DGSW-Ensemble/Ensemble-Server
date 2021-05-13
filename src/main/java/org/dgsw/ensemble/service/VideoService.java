@@ -18,10 +18,19 @@ public class VideoService {
         this.videoRepository = videoRepository;
     }
 
-    public Long add(VideoData videoData) {
+    public VideoData save(VideoData videoData) {
         videoRepository.save(videoData);
-        return videoData.getId();
+        return videoData;
     }
+
+    public void update(VideoData videoData) {
+        videoRepository.update(videoData);
+    }
+
+    public void remove(VideoData videoData) {
+        videoRepository.remove(videoData);
+    }
+
 
     public List<VideoData> getList(long offset, long amount) {
         return videoRepository.getList(offset, amount);

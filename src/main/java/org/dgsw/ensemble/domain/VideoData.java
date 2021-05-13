@@ -1,7 +1,13 @@
 package org.dgsw.ensemble.domain;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="video_data")
 public class VideoData {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String url;
