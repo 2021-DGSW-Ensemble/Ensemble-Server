@@ -29,6 +29,8 @@ public class VideoStreamController {
         logger.info("VideoStreamController Initialize");
     }
 
+    // https://royzero.tistory.com/29 [로이의 개발공장]
+
     @RequestMapping(value="/video/{video_name}", method= RequestMethod.GET)
     public String stream(@PathVariable("video_name") String video_name, HttpServletRequest request, HttpServletResponse response)
             throws IOException { // 확장자 확인 //
