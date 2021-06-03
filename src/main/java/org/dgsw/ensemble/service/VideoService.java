@@ -3,12 +3,10 @@ package org.dgsw.ensemble.service;
 import org.dgsw.ensemble.domain.VideoData;
 import org.dgsw.ensemble.repository.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
-@Transactional
 public class VideoService {
 
     private final VideoRepository videoRepository;
@@ -32,7 +30,7 @@ public class VideoService {
     }
 
 
-    public List<VideoData> getList(long offset, long amount) {
+    public List<VideoData> getList(int offset, int amount) {
         return videoRepository.getList(offset, amount);
     }
 

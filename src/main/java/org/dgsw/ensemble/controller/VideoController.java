@@ -4,12 +4,10 @@ import org.apache.commons.io.FileUtils;
 import org.dgsw.ensemble.domain.VideoData;
 import org.dgsw.ensemble.repository.VideoRepository;
 import org.dgsw.ensemble.service.VideoService;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -26,6 +24,7 @@ public class VideoController {
     @Autowired
     public VideoController(VideoService videoService) {
         this.videoService = videoService;
+        LoggerFactory.getLogger(this.getClass()).info("VideoController init");
     }
 
     @RequestMapping("/form")
@@ -57,10 +56,10 @@ public class VideoController {
         return "redirect:/form";
     }
 
+    @ResponseBody
     @GetMapping("/api/v1/video_list")
     public List<VideoData> video_list(@RequestParam("offset") Long offset, @RequestParam("amount") Long amount) {
-
-        return null;
+        return videoService.getList((int)(long) offset, (int)(long) amount);
     }
 
 }

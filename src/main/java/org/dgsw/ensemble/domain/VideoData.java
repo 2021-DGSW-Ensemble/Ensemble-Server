@@ -2,8 +2,8 @@ package org.dgsw.ensemble.domain;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name="video_data")
+@Entity(name = "video_data")
+@Table(name = "video_data")
 public class VideoData {
 
     @Id

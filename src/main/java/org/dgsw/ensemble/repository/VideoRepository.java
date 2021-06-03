@@ -12,7 +12,7 @@ public interface VideoRepository {
     void remove(VideoData videoData);
 
     Optional<VideoData> findById(long id);
-    List<VideoData> getList(long offset, long amount);
+    List<VideoData> getList(int offset, int amount);
 
 
 }

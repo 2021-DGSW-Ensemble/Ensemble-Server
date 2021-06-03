@@ -2,6 +2,7 @@ package org.dgsw.ensemble;
 
 import org.dgsw.ensemble.repository.VideoRepository;
 import org.dgsw.ensemble.service.VideoService;
+import org.dgsw.ensemble.service.VideoStreamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,5 +21,6 @@ public class SpringConfig {
     public VideoService videoService() {
         return new VideoService(videoRepository);
     }
+
 
 }

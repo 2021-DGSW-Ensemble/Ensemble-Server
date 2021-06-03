@@ -18,6 +18,7 @@ public class JpaVideoRepository implements VideoRepository {
     }
 
     @Override
+    @Transactional
     public VideoData save(VideoData videoData) {
         em.persist(videoData);
         return videoData;
@@ -36,16 +37,19 @@ public class JpaVideoRepository implements VideoRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<VideoData> findById(long id) {
         VideoData videoData = em.find(VideoData.class, id);
         return Optional.ofNullable(videoData);
     }
 
     @Override
-    public List<VideoData> getList(long offset, long amount) {
-        return em.createQuery("select v from video_data v OFFSET :offset LIMIT :amount", VideoData.class)
-                .setParameter("offset", offset)
-                .setParameter("amount", amount)
+    @Transactional(readOnly = true)
+    public List<VideoData> getList(int offset, int amount) {
+        // https://thorben-janssen.com/pagination-jpa-hibernate/
+        return em.createQuery("SELECT v FROM video_data v", VideoData.class)
+                .setFirstResult(offset)
+                .setMaxResults(amount)
                 .getResultList();
     }
 }
