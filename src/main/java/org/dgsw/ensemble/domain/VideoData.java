@@ -12,6 +12,7 @@ public class VideoData {
     private String name;
     private String url;
     private String thumbnail;
+    private Long time;
     private Float progress;
 
     public Long getId() {
@@ -46,8 +47,19 @@ public class VideoData {
         this.thumbnail = thumbnail;
     }
 
+    public Long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
+    }
+
     public Float getProgress() {
         return progress;
     }
 
+    public void setProgress(Float progress) {
+        this.progress = progress;
+    }
 }

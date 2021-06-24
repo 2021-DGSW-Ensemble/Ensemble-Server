@@ -4,7 +4,9 @@ import org.dgsw.ensemble.domain.VideoData;
 import org.dgsw.ensemble.repository.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.File;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class VideoService {
@@ -14,6 +16,10 @@ public class VideoService {
     @Autowired
     public VideoService(VideoRepository videoRepository) {
         this.videoRepository = videoRepository;
+    }
+
+    public String getPath(long id, String name, String ext) {
+        return "video/" + id + "-" + name + ext;
     }
 
     public VideoData save(VideoData videoData) {

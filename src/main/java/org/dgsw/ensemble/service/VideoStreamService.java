@@ -1,5 +1,6 @@
 package org.dgsw.ensemble.service;
 
+import org.dgsw.ensemble.domain.VideoData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.dgsw.ensemble.constants.AppConstants.*;
@@ -28,6 +30,8 @@ public class VideoStreamService {
         logger.info("VidoStreamService Initialize");
 
     }
+
+
 
     public ResponseEntity<byte[]> prepareContent(String fileName, String range) {
         long rangeStart = 0;

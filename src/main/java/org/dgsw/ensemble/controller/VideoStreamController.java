@@ -46,7 +46,7 @@ public class VideoStreamController {
          // Progressbar 에서 특정 위치를 클릭하거나 해서 임의 위치의 내용을 요청할 수 있으므로
          // 파일의 임의의 위치에서 읽어오기 위해 RandomAccessFile 클래스를 사용한다.
          // 해당 파일이 없을 경우 예외 발생
-         File file = new File("video/" + video_name);
+         File file = new File("./video/" + video_name);
          if(!file.exists()) throw new FileNotFoundException();
 
          // 요청 범위의 시작 위치

@@ -8,6 +8,7 @@ class EnsembleApplicationTests {
 
 	@Test
 	void contextLoads() {
+		System.out.println(System.currentTimeMillis());
 	}
 
 }

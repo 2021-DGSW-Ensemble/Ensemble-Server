@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Controller
 public class VideoController {
@@ -37,11 +38,13 @@ public class VideoController {
 
         VideoData videoData = new VideoData();
         videoData.setName(name);
+        videoData.setTime(System.currentTimeMillis());
         long id = videoService.save(videoData).getId();
 
-        String fileName = id + "-" + name + Objects.requireNonNull(multipartFile.getOriginalFilename()).substring(multipartFile.getOriginalFilename().lastIndexOf('.'));
-        File targetFile = new File("./video/" + fileName);
-        videoData.setUrl("video/" + fileName);
+        String ext = Objects.requireNonNull(multipartFile.getOriginalFilename()).substring(multipartFile.getOriginalFilename().lastIndexOf('.'));
+        String path = videoService.getPath(id, name, ext);
+        videoData.setUrl(path);
+        File targetFile = new File(path);
 
         try {
             InputStream fileStream = multipartFile.getInputStream();
@@ -54,6 +57,48 @@ public class VideoController {
         }
 
         return "redirect:/form";
+    }
+
+    // @RequestMapping(value = "/video_upload", method = RequestMethod.POST)
+
+    @RequestMapping(value = "/convert_video")
+    public String convertVideo(@RequestParam("id") Long id) {
+        Optional<VideoData> videoDataOptional = videoService.findById(id);
+
+        if (videoDataOptional.isEmpty()) {
+            return "{\"status\":\"fail\"}";
+        }
+
+        VideoData videoData = videoDataOptional.get();
+
+        try {
+            String absolutePath = new java.io.File(".").getCanonicalPath();
+
+            String outPath = absolutePath + "\\converted\\" + videoData.getUrl();
+
+            Runtime.getRuntime().exec("python " + absolutePath + " \\converter\\converter.py -I " + videoData.getId() + " -P " + videoData.getUrl(),
+                    null, new File(absolutePath + "\\converter\\"));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "{\"status\":\"fail\"}";
+        }
+
+        return "{\"status\":\"success\"}";
+    }
+
+    @RequestMapping(value = "/convert_video_progress")
+    public String convertVideoProgress(@RequestParam("id") Long id, @RequestParam("progress") Long progress) {
+        Optional<VideoData> videoDataOptional = videoService.findById(id);
+
+        if (videoDataOptional.isEmpty()) {
+            return "{\"status\":\"fail\"}";
+        }
+
+        VideoData videoData = videoDataOptional.get();
+        videoData.setProgress((float) progress);
+        videoService.update(videoData);
+
+        return "{\"status\":\"success\"}";
     }
 
     @ResponseBody
